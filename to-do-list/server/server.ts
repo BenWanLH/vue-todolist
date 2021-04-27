@@ -45,7 +45,6 @@ app.post("/api/updateTask", (req,res)=>{
             if(err){
                 res.status(400).json({"error":err.message});
             }else {
-                console.log("success",result);
                 res.json({
                     "message":"success",
                     "id":req.body.taskId

@@ -26,12 +26,7 @@ export default {
             if(this.input){
                 let newTask = new Task(this.input);
                 this.$store.dispatch("addTask",newTask).then(res =>{
-                    this.$store.commit("addTask",{
-                        ...newTask,
-                        "id":res.data.id
-                    })
                     this.input="";
-
                 }).catch(err=>{
                     console.error("error adding");
                 })
