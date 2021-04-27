@@ -2,6 +2,7 @@
 
 export default function getState(){
     return {
-        taskList: []
+        taskList: [],
+        displayAlert:{displayAlert:false}
     }
   }

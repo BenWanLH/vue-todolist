@@ -1,19 +1,17 @@
-import axios from "axios";
+import * as api from "../api/api"
 
 
 export default function getActions () {
     return {
         getAllTask({ commit }) {
-            axios
-                .get('http://localhost:4040/api/getAllTask')
-                .then(res => {
+            return api.getAllTask().then(res => {
                     if (res && res.data && res.data.data && res.data.data.length) {
                         commit("getAllTask", res.data.data);
                     }
                 });
         },
         addTask({ commit }, newTask) {
-            return axios.post("http://localhost:4040/api/addTask", newTask).then(res=>{
+            return api.addTask(newTask).then(res=>{
                 commit("addTask",{
                     ...newTask,
                     "id":res.data.id
@@ -21,14 +19,22 @@ export default function getActions () {
             });
         },
         removeTask({ commit }, taskId) {
-            return axios.delete(`http://localhost:4040/api/removeTask/${taskId}`).then(res=>{
+            return api.removeTask(taskId).then(res=>{
                 commit("removeTask",taskId);
             });
         },
         onChecked({commit},{taskId,checked}){
-            return axios.post("http://localhost:4040/api/updateTask", {taskId,checked}).then(res=>{
+            return api.onChecked({taskId,checked}).then(res=>{
                 commit("onChecked",{taskId,checked});
             });
+        },
+        setAlert({commit},display){
+            commit("setAlert",display);
+            if(display){
+                setTimeout(function(){
+                    commit("setAlert",!display);
+                },5000);
+            }
         }
     }
     

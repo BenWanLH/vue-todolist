@@ -22,6 +22,9 @@ export default function getMutations() {
             if(task){
                 task.checked=checked;
             }
-        }
+        },
+        setAlert({ displayAlert }, display) {
+            displayAlert.displayAlert=display;
+        },
     }
 }
