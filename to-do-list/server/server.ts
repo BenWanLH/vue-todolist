@@ -28,14 +28,32 @@ app.post("/api/addTask", (req,res)=>{
         dbSource.run(sql,[req.body.task,req.body.checked || false],function (err, result){
             if(err){
                 res.status(400).json({"error":err.message});
+            }else {
+                res.json({
+                    "message":"success",
+                    "id":this.lastID
+                })
             }
-            res.json({
-                "message":"success",
-                "id":this.lastID
-            })
+            
         })
     }
 });
+app.post("/api/updateTask", (req,res)=>{
+    if(req.body.taskId){
+        let sql = "UPDATE tasks SET checked = ? WHERE id =?";
+        dbSource.run(sql,[req.body.checked,req.body.taskId,], function(err,result){
+            if(err){
+                res.status(400).json({"error":err.message});
+            }else {
+                console.log("success",result);
+                res.json({
+                    "message":"success",
+                    "id":req.body.taskId
+                });
+            }
+        })
+    }
+})
 app.delete("/api/removeTask/:id", (req,res)=>{
     if(req.params.id){
         let sql = 'DELETE FROM tasks WHERE id = ?';

@@ -19,6 +19,11 @@ export default function getActions () {
             return axios.delete(`http://localhost:4040/api/removeTask/${taskId}`).then(res=>{
                 commit("removeTask",taskId);
             });
+        },
+        onChecked({commit},{taskId,checked}){
+            return axios.post("http://localhost:4040/api/updateTask", {taskId,checked}).then(res=>{
+                commit("onChecked",{taskId,checked});
+            });
         }
     }
     

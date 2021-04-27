@@ -2,7 +2,7 @@
     <div class="taskList">
         <ul class="taskList__container" v-if="taskList && taskList.length">
             <li class="taskList__task" v-for="(task,index) in taskList" :key="index">
-                <el-checkbox v-model="task.checked">{{task.task}}</el-checkbox>
+                <el-checkbox v-model="task.checked" v-on:change="onChecked($event,task.id)">{{task.task}}</el-checkbox>
                 <span v-on:click="removeTask(index)" class="el-icon-close"></span>
             </li>
         </ul>
@@ -42,6 +42,10 @@ export default {
       removeTask:function(index){
             this.$emit("removeTask",index);
             this.$store.dispatch("removeTask",this.taskList[index].id)
+
+      },
+      onChecked:function($event,taskId){
+        this.$store.dispatch("onChecked",{taskId,checked:$event});
 
       }
   }
